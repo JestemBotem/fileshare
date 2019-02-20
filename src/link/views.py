@@ -45,7 +45,7 @@ class CreatedView(TemplateView):
 
 class DownloadView(FormView):
     form_class = PasswordForm
-    template_name = 'link/new.html'
+    template_name = 'link/password.html'
 
     def dispatch(self, request, *args, **kwargs):
         self.object = get_object_or_404(ProtectedResource, pk=self.kwargs['id'])

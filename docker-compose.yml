@@ -1,0 +1,32 @@
+version: '3.6'
+
+services:
+  db:
+    image: postgres:10.5-alpine
+    volumes:
+      - ./postgres_data/:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: nginx/
+    ports:
+      - 8080:80
+    depends_on:
+      - web
+    volumes:
+      - ./src/uploads/:/app/uploads/
+  web:
+    build: .
+    command: >
+      bash -c "pip install -r /app/src/requirements.txt &&
+      python /app/src/manage.py migrate --noinput &&
+      python /app/src/manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./src/:/app/src/
+      - ./src/uploads/:/app/src/uploads/
+    env_file:
+      - ./.env
+    depends_on:
+      - db

@@ -1,0 +1,6 @@
+django==2.1.5
+djangorestframework==3.9.1
+psycopg2-binary==2.7.5
+django-crispy-forms==1.7.2
+gunicorn==19.9.0
+freezegun==0.3.11
